@@ -1,7 +1,16 @@
-from django.urls import include, path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import CustomUserViewSet
 
-from . import views
+router = DefaultRouter()
+router.register('users', CustomUserViewSet, basename='users')
 
 urlpatterns = [
-    path("signup/", views.SignUp.as_view(), name="signup"),
+    path(
+        'users/me/avatar/',
+        CustomUserViewSet.as_view({'put': 'avatar', 'delete': 'avatar'}),
+        name='user-avatar'
+    ),
+    path('', include(router.urls)),
+    path('auth/', include('djoser.urls.authtoken')),
 ]

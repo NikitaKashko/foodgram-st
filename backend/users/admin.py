@@ -4,14 +4,13 @@ from .models import User, Subscription
 
 
 @admin.register(User)
-class CustomUserAdmin(UserAdmin):
-    list_display = ("email", "username", "first_name", "last_name")
-    search_fields = ("email", "username")
-    list_filter = ("email", "username")
-    empty_value_display = "-пусто-"
+class UserAdmin(UserAdmin):
+    list_display = ('id', 'username', 'email', 'first_name', 'last_name')
+    search_fields = ('email', 'username')
+    list_filter = ('email', 'username')
 
 
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
-    list_display = ("user", "author")
-    empty_value_display = "-пусто-"
+    list_display = ('user', 'author')
+    search_fields = ('user__username', 'author__username')
